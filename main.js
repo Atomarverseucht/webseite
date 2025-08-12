@@ -1,7 +1,8 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const pkg = require('pg');
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import pkg from 'pg';
+const { Pool } = pkg;
 
 // Load environment variables from .env file
 const hostname = process.env.HOST;
@@ -49,7 +50,9 @@ const server = http.createServer((req, res) => {
         }
     });
 });
-const { Pool } = pkg;
+
+// db.js
+
 
 // Am besten aus einer Umgebungsvariable lesen
 const pool = new Pool({
