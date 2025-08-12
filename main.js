@@ -48,6 +48,18 @@ const server = http.createServer((req, res) => {
     });
 });
 
+// db.js
+import pkg from 'pg';
+const { Pool } = pkg;
+
+// Am besten aus einer Umgebungsvariable lesen
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // Render Connection String
+  ssl: { rejectUnauthorized: false } // nötig für Render
+});
+
+export default pool;
+
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
