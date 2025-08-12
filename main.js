@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const hostname = '127.0.0.1';
+const hostname = process.env.HOST;
 const port = process.env.PORT;
 
 const server = http.createServer((req, res) => {
