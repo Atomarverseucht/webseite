@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Atomarverseucht/webseite/issues"
   },
-  "homepage": "https://github.com/Atomarverseucht/webseite#readme"
+  "homepage": "https://github.com/Atomarverseucht/webseite#readme",
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
 }
