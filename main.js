@@ -51,9 +51,6 @@ const server = http.createServer((req, res) => {
     });
 });
 
-// db.js
-
-
 // Am besten aus einer Umgebungsvariable lesen
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Render Connection String
