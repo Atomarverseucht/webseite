@@ -9,9 +9,12 @@ const hostname = process.env.HOST;
 const port = process.env.PORT;
 
 const server = http.createServer((req, res) => {
-    let filePath = './index.html';
-    if (req.url !== '/' && req.url !== '/index.html') {
-        filePath = '.' + req.url;
+
+    let filePath = '.' + (req.url === '/' ? '/index.html' : req.url);
+    // Wenn der Pfad ein Verzeichnis ist, hänge /index.html an
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+        if (!filePath.endsWith('/')) filePath += '/';
+        filePath += 'index.html';
     }
 
     const extname = String(path.extname(filePath)).toLowerCase();
