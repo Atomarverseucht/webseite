@@ -56,7 +56,7 @@ const server = http.createServer((req, res) => {
 
 // Am besten aus einer Umgebungsvariable lesen
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Render Connection String
+  connectionString: 'postgresql://btd_user:djfRtFfGzdCUOjK2MABJP3ldzboK6NdC@dpg-d2da81idbo4c73b89a4g-a.frankfurt-postgres.render.com/btd', // Render Connection String
   ssl: { rejectUnauthorized: false } // nötig für Render
 });
 
