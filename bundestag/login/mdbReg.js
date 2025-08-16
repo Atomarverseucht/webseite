@@ -4,7 +4,7 @@ document.getElementById('bt-btn').addEventListener('click', function() {
 document.getElementById('mdbReg-btn').addEventListener('click', function() {
     window.location.href = '/mdbReg.html'; // Passe den Pfad ggf. an
 });
-document.getElementById('commit-btn').addEventListener('click', commit());
+document.getElementById('commit-btn').addEventListener('click', commit);
 
 async function commit() {
     const firstName = document.getElementById('firstName').value;
