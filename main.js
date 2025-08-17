@@ -8,7 +8,38 @@ const { Pool } = pkg;
 const hostname = process.env.HOST;
 const port = process.env.PORT;
 
+// Pool vor dem Server initialisieren, damit Request-Handler darauf zugreifen können
+const pool = new Pool({
+  connectionString: 'postgresql://btd_user:djfRtFfGzdCUOjK2MABJP3ldzboK6NdC@dpg-d2da81idbo4c73b89a4g-a.frankfurt-postgres.render.com/btd', // Render Connection String
+  ssl: { rejectUnauthorized: false } // nötig für Render
+});
+
 const server = http.createServer((req, res) => {
+
+    // API endpoint: POST /api/mdb - erwartet JSON { name: '...' }
+    if (req.url === '/api/mdb' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => { body += chunk; });
+        req.on('end', async () => {
+            try {
+                const data = JSON.parse(body || '{}');
+                const name = (data.name || '').trim();
+                if (!name) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'name is required' }));
+                    return;
+                }
+                await pool.query('INSERT INTO mdb (name_) VALUES ($1)', [name]);
+                res.writeHead(201, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ ok: true }));
+            } catch (err) {
+                console.error('API /api/mdb error', err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: err.message }));
+            }
+        });
+        return; // handled
+    }
 
     let filePath = '.' + (req.url === '/' ? '/index.html' : req.url);
     // Wenn der Pfad ein Verzeichnis ist, hänge /index.html an
@@ -52,12 +83,6 @@ const server = http.createServer((req, res) => {
             res.end(content, 'utf-8');
         }
     });
-});
-
-// Am besten aus einer Umgebungsvariable lesen
-const pool = new Pool({
-  connectionString: 'postgresql://btd_user:djfRtFfGzdCUOjK2MABJP3ldzboK6NdC@dpg-d2da81idbo4c73b89a4g-a.frankfurt-postgres.render.com/btd', // Render Connection String
-  ssl: { rejectUnauthorized: false } // nötig für Render
 });
 
 export default pool;
