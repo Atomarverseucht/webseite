@@ -1,13 +1,11 @@
-document.getElementById('bt-btn').addEventListener('click', function() {
-    window.location.href = '../'; // Passe den Pfad ggf. an
-});
+// bundestag/login/mdbReg.js
 // Frontend code: keine Node-Imports im Browser
 
 const btBtn = document.getElementById('bt-btn');
-if (btBtn) btBtn.addEventListener('click', () => { window.location.href = '../'; });
+if (btBtn) btBtn.addEventListener('click', () => { window.location.href = '/bundestag/'; });
 
 const mdbRegBtn = document.getElementById('mdbReg-btn');
-if (mdbRegBtn) mdbRegBtn.addEventListener('click', () => { window.location.href = '../login/mdbReg.html'; });
+if (mdbRegBtn) mdbRegBtn.addEventListener('click', () => { window.location.href = '/bundestag/login/mdbReg.html'; });
 
 const commitBtn = document.getElementById('commit-btn');
 if (commitBtn) commitBtn.addEventListener('click', commit);
